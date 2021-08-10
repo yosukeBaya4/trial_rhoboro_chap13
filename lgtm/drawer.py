@@ -1,3 +1,4 @@
+import os
 from PIL import Image, ImageDraw, ImageFont
 
 # 画像全体に対するメッセージ描画可能エリアの比率
@@ -9,7 +10,7 @@ FONT_MIN_SIZE = 24
 
 # WindowsやLinuxではパスが異なる
 # FONT_NAME = '/Library/Fonts/Arial Bold.ttf'
-FONT_NAME = 'Arial.ttf'
+FONT_NAME = os.path.dirname(__file__) + '/data/ipaexg.ttf'
 FONT_COLOR_WHITE = (255, 255, 255, 0)
 
 # アウトプット関連の定数
