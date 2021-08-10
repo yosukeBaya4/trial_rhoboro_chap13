@@ -1,6 +1,8 @@
 from io import BytesIO
-import requests
 from pathlib import Path
+
+import requests
+
 
 class LocalImage:
     """ファイルから画像を取得する"""
@@ -9,19 +11,8 @@ class LocalImage:
         self._path = path
 
     def get_image(self):
-        return open(self._path, 'rb')
+        return open(self._path, "rb")
 
-
-class RemoteImage:
-    """URLから画像を取得する"""
-
-    def __init__(self, path):
-        self._path = path
-
-    def get_image(self):
-        data = requests.get(self._path)
-        # バイトデータをファイルオブジェクトに変換
-        return BytesIO(data.content)
 
 class RemoteImage:
     """URLから画像を取得する"""
@@ -34,9 +25,11 @@ class RemoteImage:
         # バイトデータをファイルオブジェクトに変換
         return BytesIO(data.content)
 
+
 class _LoremFlickr(RemoteImage):
     """キーワード検索で画像を取得する"""
-    LOREM_FLICKR_URL = 'https://loremflickr.com'
+
+    LOREM_FLICKR_URL = "https://loremflickr.com"
     WIDTH = 800
     HEIGHT = 600
 
@@ -44,16 +37,17 @@ class _LoremFlickr(RemoteImage):
         super().__init__(self._build_url(keyword))
 
     def _build_url(self, keyword):
-        return (f'{self.LOREM_FLICKR_URL}/'
-                f'{self.WIDTH}/{self.HEIGHT}/{keyword}')
+        return f"{self.LOREM_FLICKR_URL}/" f"{self.WIDTH}/{self.HEIGHT}/{keyword}"
 
 
 KeywordImage = _LoremFlickr
 
-# 関数だがコンストラクタとして利用する
+
+# コンストラクタとして利用するため
+# 単語を大文字始まりにしてクラスのように見せる
 def ImageSource(keyword):
     """最適なイメージソースクラスを返す"""
-    if keyword.startswith(('http://', 'https://')):
+    if keyword.startswith(("http://", "https://")):
         return RemoteImage(keyword)
     elif Path(keyword).exists():
         return LocalImage(keyword)
