@@ -23,3 +23,8 @@ class LgtmTest(unittest.TestCase):
 
         output_path = Path(OUTPUT_NAME)
         self.assertTrue(output_path.exists())
+
+    def test_sample(self):
+        input = 1
+        expected = 1
+        self.assertEqual(expected, input)
